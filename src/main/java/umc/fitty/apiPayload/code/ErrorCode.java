@@ -1,4 +1,4 @@
-package umc.fitty.common.exception;
+package umc.fitty.apiPayload.code;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

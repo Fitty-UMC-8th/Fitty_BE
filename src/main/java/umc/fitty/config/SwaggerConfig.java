@@ -1,4 +1,4 @@
-package umc.fitty.common.config;
+package umc.fitty.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

@@ -1,10 +1,11 @@
-package umc.fitty.common.exception;
+package umc.fitty.apiPayload;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
+import umc.fitty.apiPayload.code.ErrorCode;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

@@ -1,6 +1,6 @@
-package umc.fitty.common.config;
+package umc.fitty.config.security;
 
-import umc.fitty.user.jwt.JwtAuthFilter;
+import umc.fitty.config.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

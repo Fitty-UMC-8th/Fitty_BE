@@ -1,4 +1,4 @@
-package umc.fitty.common.exception;
+package umc.fitty.apiPayload.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,8 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import umc.fitty.apiPayload.ErrorResponse;
+import umc.fitty.apiPayload.code.ErrorCode;
 
 @Slf4j
 @RestControllerAdvice

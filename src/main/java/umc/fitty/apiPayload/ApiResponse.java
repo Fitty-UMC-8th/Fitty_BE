@@ -1,4 +1,4 @@
-package umc.fitty.common.domain;
+package umc.fitty.apiPayload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

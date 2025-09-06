@@ -1,6 +1,7 @@
-package umc.fitty.common.exception;
+package umc.fitty.apiPayload.exception;
 
 import lombok.Getter;
+import umc.fitty.apiPayload.code.ErrorCode;
 
 @Getter
 public class CustomException extends RuntimeException {

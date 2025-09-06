@@ -1,4 +1,4 @@
-package umc.fitty.user.jwt;
+package umc.fitty.config.security.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.Jwts;
