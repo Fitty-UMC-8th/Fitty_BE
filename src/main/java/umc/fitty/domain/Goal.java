@@ -3,9 +3,10 @@ package umc.fitty.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import umc.fitty.domain.common.BaseEntity;
-import umc.fitty.domain.enums.GoalType;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,14 +25,30 @@ public class Goal extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private GoalType type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private Integer targetValue;
+    private Double targetDistance;
+    private Double progressDistance;
 
-    private Integer progressValue;
+    private Integer targetCount;
+    private Integer progressCount;
 
+    private Integer targetTime;
+    private Integer progressTime;
+
+    @Column(nullable = false)
     private LocalDate weekStartDate;
+
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL)
+    private List<RunRecord> runRecordList = new ArrayList<>();
+
+    public void updateProgress(Double distance, Integer durationMin){
+        this.progressDistance += distance;
+        this.progressTime += durationMin;
+        this.progressCount += 1;
+    }
 
 
 }
