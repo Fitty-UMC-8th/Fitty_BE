@@ -16,6 +16,8 @@ public enum ErrorCode {
     NOT_FOUND(HttpStatus.NOT_FOUND, "해당 리소스를 찾을 수 없습니다."),
     MISSING_REQUEST_PARAMETER(HttpStatus.BAD_REQUEST, "필수 파라미터가 누락되었습니다."),
 
+    GOAL_NOT_FOUND(HttpStatus.NOT_FOUND, "목표 정보를 찾을 수 없습니다."),
+
     // User Error
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "사용자의 정보를 찾을 수 없습니다."),
     EMAIL_ALREADY_USED(HttpStatus.BAD_REQUEST,"이미 존재하는 이메일입니다."),
