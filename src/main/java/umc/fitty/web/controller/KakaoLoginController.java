@@ -2,30 +2,26 @@ package umc.fitty.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import umc.fitty.apiPayload.ApiResponse;
+import umc.fitty.config.security.jwt.JwtToken;
 import umc.fitty.service.KakaoService;
-import umc.fitty.web.dto.KakaoUserInfoResponseDto;
 
 @Slf4j
 @RestController
+@RequestMapping("/auth/kakao")
 @RequiredArgsConstructor
-@RequestMapping("")
 public class KakaoLoginController {
 
     private final KakaoService kakaoService;
 
     @GetMapping("/callback")
-    public ResponseEntity<?> callback(@RequestParam("code") String code) {
-        String accessToken = kakaoService.getAccessTokenFromKakao(code);
-
-        KakaoUserInfoResponseDto userInfo = kakaoService.getUserInfo(accessToken);
-
-        // 여기에 서버 사용자 로그인(인증) 또는 회원가입 로직 추가
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<ApiResponse<JwtToken>> callback(@RequestParam("code") String code) {
+        JwtToken tokens = kakaoService.loginWithKakao(code);
+        return ResponseEntity.ok(ApiResponse.success("카카오 로그인 성공", tokens));
     }
 }
