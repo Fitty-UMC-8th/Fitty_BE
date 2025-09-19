@@ -1,7 +1,10 @@
 package umc.fitty.service.RunRecordService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.fitty.apiPayload.code.ErrorCode;
 import umc.fitty.apiPayload.exception.CustomException;
 import umc.fitty.converter.RecordConverter;
@@ -19,6 +22,7 @@ import java.time.temporal.TemporalAdjusters;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RecordCommandServiceImpl implements RecordCommandService {
 
     private final RecordRepository recordRepository;
@@ -29,7 +33,10 @@ public class RecordCommandServiceImpl implements RecordCommandService {
     public RunRecord createRecord(RunRecordRequestDTO.CreateRecordDTO request) {
         RunRecord newRecord = RecordConverter.toRunRecord(request);
 
-        User user = userRepository.findById(1L).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+
+        User user = userRepository.findById(Long.parseLong(userId)).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         LocalDate today = LocalDate.now();
         LocalDate weekMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
