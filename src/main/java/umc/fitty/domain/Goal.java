@@ -50,5 +50,11 @@ public class Goal extends BaseEntity {
         this.progressCount += 1;
     }
 
+    public void decreaseProgress(Double distance, Integer durationMin){
+        this.progressDistance -= distance;
+        this.progressTime -= durationMin;
+        this.progressCount -= 1;
+    }
+
 
 }

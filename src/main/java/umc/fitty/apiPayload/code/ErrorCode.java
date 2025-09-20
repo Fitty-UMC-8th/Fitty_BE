@@ -18,6 +18,8 @@ public enum ErrorCode {
 
     GOAL_NOT_FOUND(HttpStatus.NOT_FOUND, "목표 정보를 찾을 수 없습니다."),
 
+    RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "기록 정보를 찾을 수 없습니다."),
+
     // User Error
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "사용자의 정보를 찾을 수 없습니다."),
     EMAIL_ALREADY_USED(HttpStatus.BAD_REQUEST,"이미 존재하는 이메일입니다."),
