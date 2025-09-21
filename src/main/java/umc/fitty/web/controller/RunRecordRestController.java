@@ -1,10 +1,7 @@
 package umc.fitty.web.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import umc.fitty.apiPayload.ApiResponse;
 import umc.fitty.converter.RecordConverter;
 import umc.fitty.domain.RunRecord;
@@ -24,5 +21,11 @@ public class RunRecordRestController {
         RunRecord newRecord = recordCommandService.createRecord(request);
 
         return ApiResponse.success("기록이 성공적으로 생성되었습니다.", RecordConverter.toCreateResultDTO(newRecord));
+    }
+
+    @DeleteMapping("/{recordId}")
+    public ApiResponse<String> deleteRecord(@PathVariable Long recordId) {
+        recordCommandService.deleteRecord(recordId);
+        return ApiResponse.success("기록이 성공적으로 삭제되었습니다.");
     }
 }

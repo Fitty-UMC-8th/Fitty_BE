@@ -49,4 +49,15 @@ public class RecordCommandServiceImpl implements RecordCommandService {
 
         return recordRepository.save(newRecord);
     }
+
+    @Override
+    public void deleteRecord(Long recordId) {
+        RunRecord record = recordRepository.findById(recordId)
+                .orElseThrow(() -> new CustomException(ErrorCode.RECORD_NOT_FOUND));
+
+        Goal goal = record.getGoal();
+        goal.decreaseProgress(record.getDistance(), record.getDurationMin());
+
+        recordRepository.delete(record);
+    }
 }
