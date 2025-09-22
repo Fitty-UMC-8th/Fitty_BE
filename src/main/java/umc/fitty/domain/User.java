@@ -5,23 +5,20 @@ import lombok.*;
 import umc.fitty.domain.common.BaseEntity;
 
 @Entity
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(indexes = {
-        @Index(name = "idx_provider_provider_id", columnList = "provider, providerId", unique = true)
+@Table(name = "user", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"email"})
 })
+@Getter @Builder
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private AuthProvider provider;  // KAKAO
-
     @Column(nullable = false, length = 50)
-    private String providerId;      // 카카오의 user id(숫자지만 문자열 보관 권장)
+    private String kakaoId;
+
+    @Column(length = 100, unique = true)
+    private String email;
 
     @Column(nullable = false, length = 50)
     private String nickname;
@@ -29,8 +26,9 @@ public class User extends BaseEntity {
     @Column(length = 255)
     private String profileImageUrl;
 
-    public void updateProfile(String nickname, String profileImageUrl) {
-        if (nickname != null && !nickname.isBlank()) this.nickname = nickname;
-        this.profileImageUrl = profileImageUrl;
+    public void updateFromKakao(String email, String nickname, String profileImageUrl) {
+        if (email != null) this.email = email;
+        if (nickname != null) this.nickname = nickname;
+        if (profileImageUrl != null) this.profileImageUrl = profileImageUrl;
     }
 }
