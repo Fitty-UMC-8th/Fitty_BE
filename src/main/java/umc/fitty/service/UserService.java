@@ -12,17 +12,17 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public User upsertFromKakao(String kakaoId, String nickname, String profileImageUrl) {
-        return userRepository.findByProviderAndProviderId(AuthProvider.KAKAO, kakaoId)
+    public User upsertFromKakao(String kakaoId, String email, String nickname, String profileImageUrl) {
+        return userRepository.findByEmail(email)
                 .map(u -> {
                     // 닉네임/프로필 최신화
-                    u.updateProfile(nickname, profileImageUrl);
+                    u.updateFromKakao(email, nickname, profileImageUrl);
                     return u;
                 })
                 .orElseGet(() -> userRepository.save(
                         User.builder()
-                                .provider(AuthProvider.KAKAO)
-                                .providerId(kakaoId)
+                                .kakaoId(kakaoId)
+                                .email(email)
                                 .nickname(nickname != null && !nickname.isBlank() ? nickname : ("카카오사용자_" + kakaoId))
                                 .profileImageUrl(profileImageUrl)
                                 .build()

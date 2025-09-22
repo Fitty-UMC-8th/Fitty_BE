@@ -83,12 +83,17 @@ public class KakaoService {
         KakaoUserInfoResponseDto info = getUserInfo(kakaoAccessToken);
 
         String kakaoId   = String.valueOf(info.getId());
+        String email = (info.getKakaoAccount() != null) ? info.getKakaoAccount().getEmail() : null;
         String nickname  = (info.getKakaoAccount() != null && info.getKakaoAccount().getProfile() != null)
                 ? info.getKakaoAccount().getProfile().getNickName() : null;
         String profile   = (info.getKakaoAccount() != null && info.getKakaoAccount().getProfile() != null)
                 ? info.getKakaoAccount().getProfile().getProfileImageUrl() : null;
 
-        User user = userService.upsertFromKakao(kakaoId, nickname, profile);
+        if (email == null || email.isBlank()) {
+            throw new IllegalStateException("Kakao email is null/blank. Check 'account_email' scope & consent.");
+        }
+
+        User user = userService.upsertFromKakao(kakaoId, email, nickname, profile);
         String access = jwtUtil.createAccessToken(user.getId());
 
         return new JwtToken(access);
