@@ -13,8 +13,8 @@ import reactor.core.publisher.Mono;
 import umc.fitty.config.security.jwt.JwtToken;
 import umc.fitty.config.security.jwt.JwtUtil;
 import umc.fitty.domain.User;
-import umc.fitty.web.dto.KakaoTokenResponseDto;
-import umc.fitty.web.dto.KakaoUserInfoResponseDto;
+import umc.fitty.web.dto.KakaoLoginDTO.KakaoTokenResponseDto;
+import umc.fitty.web.dto.KakaoLoginDTO.KakaoUserInfoResponseDto;
 
 @Slf4j
 @RequiredArgsConstructor
