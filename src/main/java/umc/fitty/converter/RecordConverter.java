@@ -21,4 +21,16 @@ public class RecordConverter {
                 .createdAt(runRecord.getCreatedAt())
                 .build();
     }
+
+    public static RunRecordResponseDTO.RecordDetailDTO toDetailDTO(RunRecord runRecord){
+        return RunRecordResponseDTO.RecordDetailDTO.builder()
+                .recordId(runRecord.getId())
+                .distance(runRecord.getDistance())
+                .durationMin(runRecord.getDurationMin())
+                .diary(runRecord.getDiary())
+                .imageUrl(runRecord.getImageUrl())
+                .createdAt(runRecord.getCreatedAt())
+                .build();
+
+    }
 }
