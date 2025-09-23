@@ -18,4 +18,17 @@ public class RunRecordResponseDTO {
         private Long recordId;
         private LocalDateTime createdAt;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RecordDetailDTO{
+        private long recordId;
+        private Double distance;
+        private Integer durationMin;
+        private String diary;
+        private String imageUrl;
+        private LocalDateTime createdAt;
+    }
 }
