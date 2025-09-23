@@ -5,13 +5,17 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import umc.fitty.config.security.SecurityUtil;
 import umc.fitty.web.dto.UserDTO.UserMeResponseDTO;
 import umc.fitty.service.UserService;
+import umc.fitty.web.dto.UserDTO.UserMeUpdateRequestDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,5 +37,12 @@ public class UserController {
     public ResponseEntity<UserMeResponseDTO> getMyProfile() {
         Long userId = SecurityUtil.getCurrentUserId();
         return ResponseEntity.ok(userService.getMe(userId));
+    }
+
+    @Operation(summary = "내 정보 수정", security = { @SecurityRequirement(name = "bearerAuth") })
+    @PatchMapping("/me")
+    public ResponseEntity<UserMeResponseDTO> updateMyProfile(@Valid @RequestBody UserMeUpdateRequestDTO request) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        return ResponseEntity.ok(userService.updateMe(userId, request));
     }
 }
