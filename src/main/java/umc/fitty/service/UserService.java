@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.fitty.domain.*;
 import umc.fitty.repository.UserRepository;
 import umc.fitty.web.dto.UserDTO.UserMeResponseDTO;
+import umc.fitty.web.dto.UserDTO.UserMeUpdateRequestDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -34,12 +35,24 @@ public class UserService {
     public UserMeResponseDTO getMe(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+        return toResponse(user);
+    }
 
+    @Transactional
+    public UserMeResponseDTO updateMe(Long userId, UserMeUpdateRequestDTO req) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+
+        user.updateProfile(req.getNickname(), req.getProfileImageUrl());
+        return toResponse(user);
+    }
+
+    private UserMeResponseDTO toResponse(User user) {
         return UserMeResponseDTO.builder()
                 .id(user.getId())
                 .email(user.getEmail())
-                .nickname(user.getNickname())
-                .profileImageUrl(user.getProfileImageUrl())
+                .nickname(user.getEffectiveNickname())
+                .profileImageUrl(user.getEffectiveProfileImageUrl())
                 .build();
     }
 }
