@@ -1,4 +1,4 @@
-package umc.fitty.web.dto;
+package umc.fitty.web.dto.KakaoLoginDTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

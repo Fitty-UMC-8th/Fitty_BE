@@ -35,10 +35,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
 
-//        if (!jwtUtil.validateToken(token)) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
+        if (!jwtUtil.validateToken(token)) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         if (jwtUtil.validateToken(token)) {
             // 1. 토큰이 유효하면, 토큰에서 사용자 ID를 추출합니다.
