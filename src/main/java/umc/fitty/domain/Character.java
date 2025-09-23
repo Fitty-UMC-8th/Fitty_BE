@@ -1,4 +1,36 @@
 package umc.fitty.domain;
 
-public class Character {
+import jakarta.persistence.*;
+import lombok.*;
+import umc.fitty.domain.common.BaseEntity;
+import umc.fitty.domain.enums.CharacterType;
+
+@Entity
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class Character extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private String name;
+
+    @Builder.Default
+    private int level = 1;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private CharacterType type;
+
+    private void setUser(User user) {
+        this.user = user;
+    }
+
 }
