@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import umc.fitty.domain.common.BaseEntity;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "user", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"email"})
@@ -37,6 +39,29 @@ public class User extends BaseEntity {
 
     @Column(length = 255)
     private String profileImageUrl;
+
+    @Column(nullable = false)
+    private boolean isDeleted;
+
+    private LocalDateTime deletedAt;
+
+    @Column(length = 1000)
+    private String withdrawReason;
+
+    @Column(length = 2000)
+    private String withdrawFeedback;
+
+    public boolean isActive() {
+        return !this.isDeleted;
+    }
+
+    public void withdraw(String reason, String feedback) {
+        if (this.isDeleted) return;
+        this.isDeleted = true;
+        this.deletedAt = LocalDateTime.now();
+        this.withdrawReason = reason;
+        this.withdrawFeedback = feedback;
+    }
 
     // ====== 동기화 및 업데이트 메서드 ======
 

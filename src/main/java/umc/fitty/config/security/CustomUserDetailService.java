@@ -1,6 +1,7 @@
 package umc.fitty.config.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +28,10 @@ public class CustomUserDetailService implements UserDetailsService {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userId));
+
+        if (user.isDeleted()) {
+            throw new DisabledException("탈퇴한 사용자입니다.");
+        }
 
         return UserPrincipal.from(user);
     }

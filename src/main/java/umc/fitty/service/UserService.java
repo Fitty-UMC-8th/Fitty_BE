@@ -7,6 +7,7 @@ import umc.fitty.domain.*;
 import umc.fitty.repository.UserRepository;
 import umc.fitty.web.dto.UserDTO.UserMeResponseDTO;
 import umc.fitty.web.dto.UserDTO.UserMeUpdateRequestDTO;
+import umc.fitty.web.dto.UserDTO.UserWithdrawRequestDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -54,5 +55,21 @@ public class UserService {
                 .nickname(user.getEffectiveNickname())
                 .profileImageUrl(user.getEffectiveProfileImageUrl())
                 .build();
+    }
+
+    @Transactional
+    public void withdrawUser(Long userId, UserWithdrawRequestDTO req) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        if (user.isDeleted()) {
+            // 멱등 처리: 이미 탈퇴 상태면 그냥 통과
+            return;
+        }
+
+        user.withdraw(
+                req != null ? req.getReason() : null,
+                req != null ? req.getFeedback() : null
+        );
     }
 }
