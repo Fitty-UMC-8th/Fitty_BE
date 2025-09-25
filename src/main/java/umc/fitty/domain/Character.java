@@ -6,6 +6,7 @@ import umc.fitty.domain.common.BaseEntity;
 import umc.fitty.domain.enums.CharacterType;
 
 @Entity
+@Table(name = "characters")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,7 +30,7 @@ public class Character extends BaseEntity {
     @Column(nullable = false, length = 20)
     private CharacterType type;
 
-    private void setUser(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
