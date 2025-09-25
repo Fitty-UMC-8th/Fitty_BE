@@ -16,6 +16,7 @@ import umc.fitty.config.security.SecurityUtil;
 import umc.fitty.web.dto.UserDTO.UserMeResponseDTO;
 import umc.fitty.service.UserService;
 import umc.fitty.web.dto.UserDTO.UserMeUpdateRequestDTO;
+import umc.fitty.web.dto.UserDTO.UserWithdrawRequestDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,5 +45,19 @@ public class UserController {
     public ResponseEntity<UserMeResponseDTO> updateMyProfile(@Valid @RequestBody UserMeUpdateRequestDTO request) {
         Long userId = SecurityUtil.getCurrentUserId();
         return ResponseEntity.ok(userService.updateMe(userId, request));
+    }
+
+    @PatchMapping("/me/withdraw")
+    @Operation(
+            summary = "회원 탈퇴",
+            description = "현재 로그인한 사용자를 소프트 삭제합니다.",
+            security = { @SecurityRequirement(name = "bearerAuth") }
+    )
+    public ResponseEntity<Void> withdrawMe(
+            @RequestBody(required = false) @Valid UserWithdrawRequestDTO request
+    ) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        userService.withdrawUser(userId, request);
+        return ResponseEntity.noContent().build();
     }
 }
