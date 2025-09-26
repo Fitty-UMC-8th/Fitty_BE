@@ -24,7 +24,7 @@ public class CharacterConverter {
                 .build();
     }
 
-    public static CharacterResponseDTO.CharacterDetailDTO toCharacterDetailDTO(Character character){
+    public static CharacterResponseDTO.CharacterDetailDTO toCharacterDetailDTO(Character character) {
 
         String characterType = character.getType().toString();
 
@@ -35,6 +35,18 @@ public class CharacterConverter {
                 .characterName(character.getName())
                 .level(character.getLevel())
                 .type(characterType)
+                .updatedAt(character.getUpdatedAt())
+                .build();
+    }
+
+    public static CharacterResponseDTO.CharacterUpdateResultDTO toCharacterUpdateResultDTO(Character character){
+
+        String characterType = character.getType().toString();
+
+        return CharacterResponseDTO.CharacterUpdateResultDTO.builder()
+                .characterId(character.getId())
+                .characterName(character.getName())
+                .characterType(characterType)
                 .updatedAt(character.getUpdatedAt())
                 .build();
     }
