@@ -20,6 +20,8 @@ public enum ErrorCode {
 
     CHARACTER_ALREADY_EXISTS(HttpStatus.CONFLICT, "캐릭터가 이미 존재 합니다."),
 
+    CHARACTER_NOT_FOUND(HttpStatus.NOT_FOUND, "캐릭터 정보를 찾을 수 없습니다."),
+
     RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "기록 정보를 찾을 수 없습니다."),
 
     // User Error

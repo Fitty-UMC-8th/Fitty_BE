@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.fitty.domain.User;
 
 import java.time.LocalDateTime;
 
@@ -18,5 +19,19 @@ public class CharacterResponseDTO {
             private Long characterId;
             private LocalDateTime createdAt;
 
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CharacterDetailDTO{
+        private Long characterId;
+        private Long userId;
+        private String userName;
+        private String characterName;
+        private int level;
+        private String type;
+        private LocalDateTime updatedAt;
     }
 }
