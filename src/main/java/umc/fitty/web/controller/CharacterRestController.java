@@ -1,15 +1,12 @@
 package umc.fitty.web.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import umc.fitty.apiPayload.ApiResponse;
 import umc.fitty.converter.CharacterConverter;
 import umc.fitty.domain.Character;
 import umc.fitty.service.CharacterService.CharacterCommandService;
+import umc.fitty.service.CharacterService.CharacterQueryService;
 import umc.fitty.web.dto.CharacterDTO.CharacterRequestDTO;
 import umc.fitty.web.dto.CharacterDTO.CharacterResponseDTO;
 
@@ -19,10 +16,17 @@ import umc.fitty.web.dto.CharacterDTO.CharacterResponseDTO;
 public class CharacterRestController {
 
     private final CharacterCommandService characterCommandService;
+    private final CharacterQueryService characterQueryService;
 
     @PostMapping
     public ApiResponse<CharacterResponseDTO.CreateCharacterResultDTO> createCharacter(@RequestBody CharacterRequestDTO.CreateCharacterDTO request) {
         Character character = characterCommandService.createCharacter(request);
         return ApiResponse.success("캐릭터가 성공적으로 생성되었습니다.", CharacterConverter.toCharacterResultDTO(character));
+    }
+
+    @GetMapping
+    public ApiResponse<CharacterResponseDTO.CharacterDetailDTO> getCharacter(){
+        Character character = characterQueryService.findMyCharacter();
+        return ApiResponse.success("캐릭터 조회에 성공했습니다.", CharacterConverter.toCharacterDetailDTO(character));
     }
 }
