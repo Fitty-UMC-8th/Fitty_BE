@@ -1,5 +1,6 @@
 package umc.fitty.web.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.fitty.apiPayload.ApiResponse;
@@ -18,6 +19,7 @@ public class CharacterRestController {
     private final CharacterCommandService characterCommandService;
     private final CharacterQueryService characterQueryService;
 
+
     @PostMapping
     public ApiResponse<CharacterResponseDTO.CreateCharacterResultDTO> createCharacter(@RequestBody CharacterRequestDTO.CreateCharacterDTO request) {
         Character character = characterCommandService.createCharacter(request);
@@ -25,8 +27,14 @@ public class CharacterRestController {
     }
 
     @GetMapping
-    public ApiResponse<CharacterResponseDTO.CharacterDetailDTO> getCharacter(){
+    public ApiResponse<CharacterResponseDTO.CharacterDetailDTO> getCharacter() {
         Character character = characterQueryService.findMyCharacter();
         return ApiResponse.success("캐릭터 조회에 성공했습니다.", CharacterConverter.toCharacterDetailDTO(character));
+    }
+
+    @PatchMapping
+    public ApiResponse<CharacterResponseDTO.CharacterUpdateResultDTO> updateCharacter(@Valid @RequestBody CharacterRequestDTO.UpdateCharacterDTO request) {
+        Character character = characterCommandService.updateCharacter(request);
+        return ApiResponse.success("캐릭터 정보 수정에 성공했습니다.", CharacterConverter.toCharacterUpdateResultDTO(character));
     }
 }

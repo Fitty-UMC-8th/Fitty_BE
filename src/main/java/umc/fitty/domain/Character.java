@@ -34,4 +34,9 @@ public class Character extends BaseEntity {
         this.user = user;
     }
 
+    public void setNameAndType(String name, CharacterType type) {
+        this.name = name;
+        this.type = type;
+    }
+
 }

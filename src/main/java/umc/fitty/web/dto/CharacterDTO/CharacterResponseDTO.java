@@ -25,7 +25,7 @@ public class CharacterResponseDTO {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CharacterDetailDTO{
+    public static class CharacterDetailDTO {
         private Long characterId;
         private Long userId;
         private String userName;
@@ -33,5 +33,17 @@ public class CharacterResponseDTO {
         private int level;
         private String type;
         private LocalDateTime updatedAt;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CharacterUpdateResultDTO{
+        private Long characterId;
+        private String characterName;
+        private String characterType;
+        private LocalDateTime updatedAt;
+
     }
 }
