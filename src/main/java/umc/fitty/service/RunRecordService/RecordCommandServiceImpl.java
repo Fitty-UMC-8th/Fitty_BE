@@ -41,7 +41,7 @@ public class RecordCommandServiceImpl implements RecordCommandService {
         LocalDate today = LocalDate.now();
         LocalDate weekMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
-        Goal goal = goalRepository.findByUserAndWeekStartDate(user, weekMonday).orElseThrow(() -> new CustomException(ErrorCode.GOAL_NOT_FOUND));
+        Goal goal = goalRepository.findByUserIdAndWeekStartDate(user.getId(), weekMonday).orElseThrow(() -> new CustomException(ErrorCode.GOAL_NOT_FOUND));
 
         goal.updateProgress(newRecord.getDistance(), newRecord.getDurationMin());
 
