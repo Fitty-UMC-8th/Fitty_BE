@@ -16,7 +16,7 @@ import umc.fitty.web.dto.GoalDTO.GoalResponseDTO;
 
 @Tag(name = "Goal")
 @RestController
-@RequestMapping("/api/v1/goals")
+@RequestMapping("/goals")
 @RequiredArgsConstructor
 public class GoalController {
 
